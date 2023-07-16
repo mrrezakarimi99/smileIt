@@ -4,7 +4,7 @@ return [
     'User'      => [
         'name'         => 'User' ,
         'description'  => 'User Module' ,
-        'status'       => false ,
+        'status'       => true ,
         'services'     => [
             'provider' => 'Modules\\User\\UserServiceProvider' ,
             'lang'     => [
@@ -12,8 +12,6 @@ return [
                 'name' => 'user' ,
             ] ,
         ] ,
-        'dependencies' => [
-            '' ,
-        ] ,
+        'dependencies' => [] ,
     ] ,
 ];

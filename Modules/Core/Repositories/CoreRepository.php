@@ -4,7 +4,6 @@ namespace Modules\Core\Repositories;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Modules\Core\Services\CollectionService;
 
 
@@ -22,10 +21,7 @@ abstract class CoreRepository
         $this->collectionService->setModelClass(get_class($this->model));
         $this->collectionService->initializeSort();
         $this->collectionService->initializeFilter();
-
-        if ($request->has('with')) {
-            $query->with($request->get('with'));
-        }
+        $this->collectionService->initializeWith();
 
         return $query->paginate($request->get('per_page' , 10));
     }

@@ -32,7 +32,7 @@ use OpenApi\Annotations as OA;
  * )
  *
  * @QAS\SecurityScheme(
- *      securityScheme="bearer_token",
+ *      securityScheme="bearerAuth",
  *      type="http",
  *      scheme="bearer"
  * )

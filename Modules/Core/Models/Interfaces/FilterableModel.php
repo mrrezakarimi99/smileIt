@@ -17,4 +17,11 @@ interface FilterableModel
      * @return array
      */
     public function getFilterFields(): array;
+
+    /**
+     * Returns the list of fields that are allowed to be returned in the response
+     *
+     * @return array
+     */
+    public function getWithFields(): array;
 }

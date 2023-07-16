@@ -3,9 +3,48 @@
 namespace Modules\Core\Tests;
 
 
+use Modules\User\Models\User;
 use Tests\TestCase;
 
 class CoreTestCase extends TestCase
 {
-    //
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate:fresh');
+        $this->artisan('db:seed');
+        User::factory()->create([
+            'username' => 'admin' ,
+        ]);
+    }
+
+    protected function getAuthHeader(): array
+    {
+        $response = $this->postJson('api/v1/auth/login' , [
+            'username' => 'admin' ,
+            'password' => '123456' ,
+        ]);
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id' ,
+                'username' ,
+                'first_name' ,
+                'last_name' ,
+                'access_token' ,
+                'expires_in' ,
+            ] ,
+        ]);
+        $response->assertJson([
+            'data' => [
+                'username' => 'admin' ,
+            ] ,
+        ]);
+        $data = $response->json('data');
+        $token = $data['access_token'];
+        return [
+            'Authorization' => 'Bearer ' . $token ,
+        ];
+    }
+
 }

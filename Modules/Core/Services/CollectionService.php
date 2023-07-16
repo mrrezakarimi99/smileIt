@@ -63,7 +63,6 @@ class CollectionService
         if (isset($filterData['search'])) {
             $searchInput = $filterData['search'];
             unset($filterData['search']);
-
             $this->queryBuilder->where(function (Builder $query) use ($searchInput, $searchFields) {
                 foreach ($searchFields as $field) {
                     $query->orWhere($field, 'like', '%'.  $searchInput . '%');
@@ -80,8 +79,26 @@ class CollectionService
 
         if (count($filterData) > 0) {
             foreach ($filterData as $field => $datum) {
-                if (in_array($field, $filterFields)) {
-                    $this->queryBuilder->where($field, $datum);
+                if (in_array($field , $filterFields)) {
+                    $this->queryBuilder->where($field , $datum);
+                }
+            }
+        }
+    }
+
+    /**
+     * Read the with parameter from the request and load the specified relations
+     *
+     * @return void
+     */
+    public function initializeWith(): void
+    {
+        $with = $this->request->get('with' , []);
+        $withFields = $this->modelClass->getWithFields();
+        if (count($with) > 0) {
+            foreach ($with as $field) {
+                if (in_array($field , $withFields)) {
+                    $this->queryBuilder->with($field);
                 }
             }
         }

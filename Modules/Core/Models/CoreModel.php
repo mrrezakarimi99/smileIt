@@ -18,12 +18,17 @@ class CoreModel extends Model implements FilterableModel
         return [];
     }
 
+    public function getWithFields(): array
+    {
+        return [];
+    }
+
     public function getCreatedAtAttribute($value): string
     {
         if ($value == null) {
             return '';
         }
-        return date('Y-m-d H:i:s', strtotime($value));
+        return date('Y-m-d H:i:s' , strtotime($value));
     }
 
     public function getUpdatedAtAttribute($value): string
