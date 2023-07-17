@@ -3,6 +3,7 @@
 namespace Modules\Core\Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Modules\Bank\Database\seeds\BankSeeder;
 use Modules\User\Database\seeds\UserSeeder;
 
 class CoreDatabaseSeeder extends Seeder
@@ -15,7 +16,8 @@ class CoreDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            UserSeeder::class
+            UserSeeder::class ,
+            BankSeeder::class ,
         ]);
     }
 }
