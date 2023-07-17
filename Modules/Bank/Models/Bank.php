@@ -3,6 +3,8 @@
 namespace Modules\Bank\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\Account\Models\Account;
 use Modules\Bank\Database\factories\BankFactory;
 use Modules\Bank\Http\Resources\BankCollection;
 use Modules\Bank\Http\Resources\BankResource;
@@ -33,6 +35,10 @@ class Bank extends CoreModel
     |--------------------------------------------------------------------------
     |
     */
+    public function accounts(): HasMany
+    {
+        return $this->hasMany(Account::class);
+    }
 
     /*
     |--------------------------------------------------------------------------

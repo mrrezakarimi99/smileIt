@@ -12,4 +12,13 @@ class BankService extends CoreService
         $this->repository = $repository;
         $this->modelName = 'Bank';
     }
+
+    public function destroyWithCheckAccounts($id)
+    {
+        $model = $this->repository->show('id' , $id);
+        if ($model->accounts()->count() > 0) {
+            return $this->errorResponse([] , $this->generateMessage('destroy' , 'not_allowed') , 403);
+        }
+        return $this->destroy('id' , $id);
+    }
 }

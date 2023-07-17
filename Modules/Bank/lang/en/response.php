@@ -18,7 +18,8 @@ return [
         'fail'    => ':module failed to update.' ,
     ] ,
     'destroy' => [
-        'success' => ':module successfully deleted.' ,
-        'fail'    => ':module failed to delete.' ,
+        'success'     => ':module successfully deleted.' ,
+        'fail'        => ':module failed to delete.' ,
+        'not_allowed' => 'You can not delete this bank because it has some accounts.' ,
     ] ,
 ];

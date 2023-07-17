@@ -252,6 +252,6 @@ class BankController extends CoreController
      */
     public function destroy($id)
     {
-        return $this->service->destroy('id' , $id);
+        return $this->service->destroyWithCheckAccounts($id);
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace Modules\User\Tests\Feature\Auth;
+namespace Modules\Bank\Tests\Feature;
 
+use Modules\Account\Models\Account;
 use Modules\Core\Tests\CoreTestCase;
 
 class BankTest extends CoreTestCase
@@ -42,63 +43,29 @@ class BankTest extends CoreTestCase
 
     }
 
-    public function test_create_bank()
-    {
-        $response = $this->postJson('api/v1/admin/bank' , [
-            'name' => 'Bank Test' ,
-        ] , $this->getAuthHeader());
-        $response->assertStatus(201);
-        $response->assertJsonStructure([
-            'data' => [
-                'id' ,
-                'name' ,
-                'created_at' ,
-            ] ,
-            'message' ,
-            'status'
-        ]);
-
-    }
-
-    public function test_update_bank()
-    {
-        $response = $this->putJson('api/v1/admin/bank/1' , [
-            'name' => 'Bank Test' ,
-        ] , $this->getAuthHeader());
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'id' ,
-                'name' ,
-                'created_at' ,
-            ] ,
-            'message' ,
-            'status'
-        ]);
-
-    }
-
-    public function test_delete_bank()
-    {
-        $response = $this->deleteJson('api/v1/admin/bank/1' , [] , $this->getAuthHeader());
-        $response->assertStatus(200);
-        $response->assertJsonStructure([
-            'data' => [
-                'id' ,
-                'name' ,
-                'created_at' ,
-            ] ,
-            'message' ,
-            'status'
-        ]);
-
-    }
-
     public function test_get_bank_by_id_not_found()
     {
         $response = $this->getJson('api/v1/admin/bank/1000' , $this->getAuthHeader());
         $response->assertStatus(404);
         $response->assertJsonStructure([
+            'message' ,
+            'status'
+        ]);
+
+    }
+
+    public function test_create_bank()
+    {
+        $response = $this->postJson('api/v1/admin/bank' , [
+            'name' => 'Bank Test' ,
+        ] , $this->getAuthHeader());
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id' ,
+                'name' ,
+                'created_at' ,
+            ] ,
             'message' ,
             'status'
         ]);
@@ -122,6 +89,24 @@ class BankTest extends CoreTestCase
         ]);
     }
 
+    public function test_update_bank()
+    {
+        $response = $this->putJson('api/v1/admin/bank/1' , [
+            'name' => 'Bank Test' ,
+        ] , $this->getAuthHeader());
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id' ,
+                'name' ,
+                'created_at' ,
+            ] ,
+            'message' ,
+            'status'
+        ]);
+
+    }
+
     public function test_update_bank_validation()
     {
         $response = $this->putJson('api/v1/admin/bank/1' , [
@@ -135,6 +120,32 @@ class BankTest extends CoreTestCase
                     'name'
                 ]
             ] ,
+            'status'
+        ]);
+    }
+
+    public function test_delete_bank()
+    {
+        Account::query()->where('bank_id' , 1)->delete();
+        $response = $this->deleteJson('api/v1/admin/bank/1' , [] , $this->getAuthHeader());
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [
+                'id' ,
+                'name' ,
+                'created_at' ,
+            ] ,
+            'message' ,
+            'status'
+        ]);
+    }
+
+    public function test_delete_bank_with_account()
+    {
+        $response = $this->deleteJson('api/v1/admin/bank/1' , [] , $this->getAuthHeader());
+        $response->assertStatus(403);
+        $response->assertJsonStructure([
+            'message' ,
             'status'
         ]);
     }
