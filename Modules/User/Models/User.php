@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Modules\Core\Models\CoreAuthenticatable;
+use Modules\User\Database\factories\UserFactory;
 use Modules\User\Http\Resources\User\UserCollection;
 use Modules\User\Http\Resources\User\UserResource;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -36,9 +37,19 @@ class User extends CoreAuthenticatable implements JWTSubject
         'remember_token' ,
     ];
 
-    protected static function newFactory()
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    /**
+     * @return UserFactory
+     */
+    protected static function newFactory(): UserFactory
     {
-        return \Modules\User\Database\factories\UserFactory::new();
+        return UserFactory::new();
     }
 
     /**
@@ -65,6 +76,17 @@ class User extends CoreAuthenticatable implements JWTSubject
         $this->attributes['password'] = bcrypt($password);
     }
 
+    /**
+     * @return string
+     */
+    public function getFullNameAttribute(): string
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    /**
+     * @return string[]
+     */
     public function getSearchFields(): array
     {
         return [
@@ -72,6 +94,9 @@ class User extends CoreAuthenticatable implements JWTSubject
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function getFilterFields(): array
     {
         return [
@@ -79,6 +104,9 @@ class User extends CoreAuthenticatable implements JWTSubject
         ];
     }
 
+    /**
+     * @return array
+     */
     public function getWithFields(): array
     {
         return [];
