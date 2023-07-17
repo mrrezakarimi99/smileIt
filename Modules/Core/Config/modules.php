@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'User' => [
+    'User'    => [
         'name'         => 'User' ,
         'description'  => 'User Module' ,
         'status'       => true ,
@@ -14,7 +14,7 @@ return [
         ] ,
         'dependencies' => [] ,
     ] ,
-    'Bank' => [
+    'Bank'    => [
         'name'         => 'Bank' ,
         'description'  => 'Bank Module' ,
         'status'       => true ,
@@ -23,6 +23,21 @@ return [
             'lang'     => [
                 'path' => 'Modules/Bank/lang' ,
                 'name' => 'bank' ,
+            ] ,
+        ] ,
+        'dependencies' => [
+            'User' ,
+        ] ,
+    ] ,
+    'Account' => [
+        'name'         => 'Account' ,
+        'description'  => 'Account Module' ,
+        'status'       => true ,
+        'services'     => [
+            'provider' => 'Modules\\Account\\AccountServiceProvider' ,
+            'lang'     => [
+                'path' => 'Modules/Account/lang' ,
+                'name' => 'account' ,
             ] ,
         ] ,
         'dependencies' => [

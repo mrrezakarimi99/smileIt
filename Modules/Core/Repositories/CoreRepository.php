@@ -33,7 +33,7 @@ abstract class CoreRepository
 
     public function store($data)
     {
-        return $this->model->create($data);
+        return $this->model->create($data)->fresh();
     }
 
     public function update($key , $value , $data)
