@@ -11,9 +11,13 @@ class AccountFactory extends Factory
 
     public function definition(): array
     {
+        $accountNumber = 60379974 . $this->faker->randomNumber(8);
+        while (strlen($accountNumber) < 16) {
+            $accountNumber .= $this->faker->randomDigit;
+        }
         return [
-            'account_number' => 60379974 . $this->faker->unique()->randomNumber(8) ,
-            'balance'        => 0
+            'account_number' => $accountNumber ,
+            'balance'        => 0 ,
         ];
     }
 }
