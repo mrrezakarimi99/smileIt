@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->enum('type' , ['deposit' , 'withdraw' , 'transfer']);
             $table->unsignedBigInteger('from_account_id')->nullable();
             $table->foreign('from_account_id')->references('id')->on('accounts');
-            $table->unsignedBigInteger('to_account_id');
+            $table->unsignedBigInteger('to_account_id')->nullable();
             $table->foreign('to_account_id')->references('id')->on('accounts');
             $table->timestamps();
         });
