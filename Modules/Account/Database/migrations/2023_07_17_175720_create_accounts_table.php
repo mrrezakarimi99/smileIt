@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('bank_id')->constrained('banks');
             $table->string('account_number')->unique()->comment('Account Number');
-            $table->float('balance')->comment('Account Balance')->default(0);
+            $table->decimal('balance' , 10)->comment('Account Balance')->default(0);
             $table->timestamps();
         });
     }

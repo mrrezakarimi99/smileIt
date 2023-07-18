@@ -34,5 +34,6 @@ return [
             'success' => 'Payment successfully transferred.' ,
             'fail'    => 'Payment failed to transfer.' ,
         ] ,
+        'not_enough_balance' => 'Not enough balance.' ,
     ]
 ];

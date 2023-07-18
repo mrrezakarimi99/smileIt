@@ -17,7 +17,7 @@ return new class extends Migration {
         Schema::create('transactions' , function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->float('amount');
+            $table->decimal('amount' , 10 , 2);
             $table->string('description')->nullable();
             $table->enum('type' , ['deposit' , 'withdraw' , 'transfer']);
             $table->unsignedBigInteger('from_account_id')->nullable();

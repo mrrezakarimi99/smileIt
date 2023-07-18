@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Account\Tests\Feature;
+namespace Modules\Account\Tests\Feature\Account;
 
 use Modules\Core\Tests\CoreTestCase;
 

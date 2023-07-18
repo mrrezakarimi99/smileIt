@@ -98,6 +98,11 @@ class AccountService extends CoreService
             // Fetch the account
             $account = $this->repository->show('account_number' , $request->account_number);
 
+            //check balance is enough
+            if ($this->checkBalanceIsEnough($account->balance , $request->amount)) {
+                return $this->errorResponse([] , $this->generateMessage('payment' , 'not_enough_balance') , 422);
+            }
+
             //make transaction
             $this->transactionRepository->store([
                 'from_account_id' => $account->id ,
@@ -138,6 +143,11 @@ class AccountService extends CoreService
             $fromAccount = $this->repository->show('account_number' , $request->from_account_number);
             $toAccount = $this->repository->show('account_number' , $request->to_account_number);
 
+            //check balance is enough
+            if ($this->checkBalanceIsEnough($fromAccount->balance , $request->amount)) {
+                return $this->errorResponse([] , $this->generateMessage('payment' , 'not_enough_balance') , 422);
+            }
+
             //make transaction
             $this->transactionRepository->store([
                 'from_account_id' => $fromAccount->id ,
@@ -153,7 +163,7 @@ class AccountService extends CoreService
             $this->repository->updateBalance($toAccount->id);
 
             DB::commit();
-            return $this->successResponse([],$this->generateMessage('payment' ,'transfer.success'));
+            return $this->successResponse([] , $this->generateMessage('payment' , 'transfer.success'));
         } catch (Exception $e) {
             DB::rollBack();
             Log::error('payment transfer error');
@@ -161,5 +171,17 @@ class AccountService extends CoreService
             Log::error($e->getTraceAsString());
             return $this->errorResponse([] , $this->generateMessage('payment' , 'transfer.fail') , 500);
         }
+    }
+
+    /**
+     * @param $balance
+     * @param int $amount
+     * @return bool
+     */
+    private function checkBalanceIsEnough($balance , int $amount): bool
+    {
+        $balance = str_replace(',' , '' , $balance);
+        $balance = intval($balance);
+        return $balance < $amount;
     }
 }
