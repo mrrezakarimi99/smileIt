@@ -14,7 +14,7 @@ use Modules\User\Models\User;
 
 class Account extends CoreModel
 {
-    use HasFactory , SoftDeletes;
+    use HasFactory;
 
     const RESOURCE = AccountResource::class;
     const RESOURCE_COLLECTION = AccountCollection::class;

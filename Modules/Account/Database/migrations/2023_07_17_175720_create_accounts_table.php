@@ -21,7 +21,6 @@ return new class extends Migration {
             $table->string('account_number')->unique()->comment('Account Number');
             $table->decimal('balance' , 10)->comment('Account Balance')->default(0);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
