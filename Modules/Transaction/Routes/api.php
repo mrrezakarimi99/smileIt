@@ -14,6 +14,7 @@ Route::group([
         'prefix'     => 'admin'
     ] , function () {
         Route::get('/transaction',[TransactionController::class,'index']);
+        Route::get('/transaction/{id}',[TransactionController::class,'show']);
     });
 
     Route::group([
