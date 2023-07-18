@@ -27,7 +27,7 @@ class AuthController extends CoreController
      *      description="Login",
      *      @OA\JsonContent(
      *          required={"username","password"},
-     *          @OA\Property(property="username", type="string", format="text", example="username"),
+     *          @OA\Property(property="username", type="string", format="text", example="admin"),
      *          @OA\Property(property="password", type="string", format="text", example="123456"),
      *      ),
      *    ),
