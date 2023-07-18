@@ -178,9 +178,9 @@ class PaymentTest extends CoreTestCase
 
     public function test_it_can_withdraw()
     {
-        $account = $this->getAccount();
+        $account = $this->getAccount(5);
         $response = $this->postJson('api/v1/account/withdraw' , [
-            'amount'         => 1000 ,
+            'amount'         => 100 ,
             'account_number' => $account['account_number'] ,
             'description'    => 'test withdraw'
         ] , $this->getAuthHeader());
@@ -197,7 +197,7 @@ class PaymentTest extends CoreTestCase
         ]);
         $balance = $this->convertBalance($account['balance']);
         $accountNew = $this->getJson('api/v1/admin/account/' . $account['id'] , $this->getAuthHeader())->json('data');
-        $this->assertEquals($balance - 1000 , $this->convertBalance($accountNew['balance']));
+        $this->assertEquals($balance - 100 , $this->convertBalance($accountNew['balance']));
     }
 
     public function test_it_can_withdraw_with_invalid_amount()

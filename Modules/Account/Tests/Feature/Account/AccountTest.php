@@ -3,6 +3,7 @@
 namespace Modules\Account\Tests\Feature\Account;
 
 use Modules\Core\Tests\CoreTestCase;
+use Modules\Transaction\Models\Transaction;
 
 class AccountTest extends CoreTestCase
 {
@@ -194,6 +195,7 @@ class AccountTest extends CoreTestCase
 
     public function test_delete_account()
     {
+        Transaction::query()->where('from_account_id' , 1)->orWhere('to_account_id' , 1)->delete();
         $response = $this->deleteJson('api/v1/admin/account/1' , [] , $this->getAuthHeader());
         $response->assertStatus(200);
         $response->assertJsonStructure([

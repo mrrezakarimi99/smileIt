@@ -143,7 +143,7 @@ class TransactionTest extends CoreTestCase
 
     public function test_get_transaction_by_id()
     {
-        $response = $this->getJson('api/v1/admin/transaction/1' , $this->getAuthHeader());
+        $response = $this->getJson('api/v1/admin/transaction/13' , $this->getAuthHeader());
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [

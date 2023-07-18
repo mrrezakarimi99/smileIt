@@ -1,9 +1,12 @@
 <?php
 
-namespace Modules\Bank\Tests\Feature;
+namespace Modules\Bank\Tests\Feature\Bank;
 
+use Illuminate\Support\Str;
 use Modules\Account\Models\Account;
+use Modules\Bank\Models\Bank;
 use Modules\Core\Tests\CoreTestCase;
+use Modules\Transaction\Models\Transaction;
 
 class BankTest extends CoreTestCase
 {
@@ -57,7 +60,7 @@ class BankTest extends CoreTestCase
     public function test_create_bank()
     {
         $response = $this->postJson('api/v1/admin/bank' , [
-            'name' => 'Bank Test' ,
+            'name' => Str::random(10)
         ] , $this->getAuthHeader());
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -92,7 +95,7 @@ class BankTest extends CoreTestCase
     public function test_update_bank()
     {
         $response = $this->putJson('api/v1/admin/bank/1' , [
-            'name' => 'Bank Test' ,
+            'name' => Str::random(10) ,
         ] , $this->getAuthHeader());
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -126,8 +129,12 @@ class BankTest extends CoreTestCase
 
     public function test_delete_bank()
     {
-        Account::query()->where('bank_id' , 1)->delete();
-        $response = $this->deleteJson('api/v1/admin/bank/1' , [] , $this->getAuthHeader());
+        $accounts = Account::query()->where('bank_id' , 2)->get();
+        foreach ($accounts as $account) {
+            Transaction::query()->where('from_account_id' , $account->id)->orWhere('to_account_id' , $account->id)->delete();
+            $account->delete();
+        }
+        $response = $this->deleteJson('api/v1/admin/bank/2' , [] , $this->getAuthHeader());
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [
@@ -142,7 +149,7 @@ class BankTest extends CoreTestCase
 
     public function test_delete_bank_with_account()
     {
-        $response = $this->deleteJson('api/v1/admin/bank/1' , [] , $this->getAuthHeader());
+        $response = $this->deleteJson('api/v1/admin/bank/3' , [] , $this->getAuthHeader());
         $response->assertStatus(403);
         $response->assertJsonStructure([
             'message' ,

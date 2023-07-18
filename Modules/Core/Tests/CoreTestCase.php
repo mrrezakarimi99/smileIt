@@ -2,8 +2,6 @@
 
 namespace Modules\Core\Tests;
 
-
-use Modules\User\Models\User;
 use Tests\TestCase;
 
 class CoreTestCase extends TestCase
@@ -13,9 +11,6 @@ class CoreTestCase extends TestCase
         parent::setUp();
         $this->artisan('migrate:fresh');
         $this->artisan('db:seed');
-        User::factory()->create([
-            'username' => 'admin' ,
-        ]);
     }
 
     protected function getAuthHeader(): array
@@ -51,5 +46,4 @@ class CoreTestCase extends TestCase
     {
         return $this->getJson('api/v1/admin/account' , $this->getAuthHeader())->json('data')[$number];
     }
-
 }
