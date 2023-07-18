@@ -1,0 +1,45 @@
+version: '3.3'
+services:
+  mysql:
+    hostname: smileit_mysql
+    image : mysql:8.0
+    container_name : smileit_mysql
+    restart: unless-stopped
+    env_file: ./Docker/mysql/.env
+    ports:
+      - "3309:3306"
+    volumes :
+      - "./Docker/data/mysql/smileit:/var/lib/mysql"
+      - "./Docker/data/mysql/backup:/data/backups"
+    networks:
+      - smileit_network
+  php :
+    hostname: smileit_php
+    build : ./Docker/php
+    container_name : smileit_php
+    restart: unless-stopped
+    ports:
+      - "9200:9000"
+    volumes :
+      - "./Web:/var/www/smileit"
+      - "./Docker/php/custom.ini:/usr/local/etc/php/conf.d/custom.ini"
+    networks:
+      - smileit_network
+  nginx :
+    hostname : smileit_nginx
+    build : ./Docker/nginx
+    container_name : smileit_nginx
+    restart : always
+    ports :
+      - "8050:80"
+    volumes :
+      - "./Docker/nginx/conf.d:/etc/nginx/conf.d/"
+      - "./Web:/var/www/smileit"
+    links:
+      - php
+    networks :
+      - smileit_network
+networks:
+  smileit_network:
+    driver: bridge
+    external: false

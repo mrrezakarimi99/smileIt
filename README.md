@@ -1,45 +1,45 @@
 # SMILE IT
 
 ## requirements
-- php 8.1
-- composer
-- mysql 8.0
-- laravel 8.0
-- docker (optional)
+- docker
+- docker-compose
 
-# usage
+## usage
+
+### clone project
 ```bash
 git clone https://github.com/mrrezakarimi99/smileIt
 cd smileIt
-cp .env.example .env # and edit it for your database
-composer install
-php artisan migrate
-php artisan db:seed
-php artisan serve
 ```
 
-#### help for install composer
+### config .env file
+```bash
+cp Docker/mysql/.env.example Docker/mysql/.env # and edit it for your database
+cp Web/.env.example Web/.env # and edit it for your database
+```
+
+### run project
+```bash
+docker-compose up -d --build 
+docker exec -it smileit_php php artisan key:generate
+docker exec -it smileit_php composer install
+docker exec -it smileit_php php artisan migrate
+docker exec -it smileit_php php artisan db:seed
+```
+
+### help for install docker
 
 ```bash
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+sudo apt install docker-ce
 ```
 
-#### help for install mysql
+### help for install docker compose
 
 ```bash
-sudo apt install mysql-server
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
 ```
-
-#### help for install php and some necessary extensions
-
-```bash
-sudo apt install php php-cli php-fpm php-json php-pdo php-mysql php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath
-```
-
-#### if you want to run tests
-
-```bash
-php artisan test
-```
-
