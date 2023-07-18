@@ -98,5 +98,4 @@ class Account extends CoreModel
     {
         return number_format($this->attributes['balance'] , 2);
     }
-
 }
