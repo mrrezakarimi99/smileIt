@@ -20,9 +20,9 @@ cp Web/.env.example Web/.env # and edit it for your database
 
 ### run project
 ```bash
-docker-compose up -d --build 
-docker exec -it smileit_php php artisan key:generate
+docker-compose up -d --build
 docker exec -it smileit_php composer install
+docker exec -it smileit_php php artisan key:generate
 docker exec -it smileit_php php artisan migrate
 docker exec -it smileit_php php artisan db:seed
 ```
