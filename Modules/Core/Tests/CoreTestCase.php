@@ -47,4 +47,9 @@ class CoreTestCase extends TestCase
         ];
     }
 
+    protected function getAccount($number = 0)
+    {
+        return $this->getJson('api/v1/admin/account' , $this->getAuthHeader())->json('data')[$number];
+    }
+
 }

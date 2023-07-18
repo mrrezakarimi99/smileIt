@@ -26,7 +26,7 @@ class TransferRequest extends CoreFormRequest
         return [
             'amount'              => 'required|numeric|min:1' ,
             'from_account_number' => 'required|exists:accounts,account_number' ,
-            'to_account_number'   => 'required|exists:accounts,account_number' ,
+            'to_account_number'   => 'required|exists:accounts,account_number|different:from_account_number' ,
             'description'         => 'nullable|string|max:255' ,
         ];
     }

@@ -21,7 +21,10 @@ class TransactionResource extends CoreResource
     {
         return [
             'id'          => $this->id ,
-            'user'        => $this->user ? $this->user->fullname : null ,
+            'user'        => $this->user ? [
+                'id'       => $this->user->id ,
+                'fullName' => $this->user->fullname ,
+            ] : null ,
             'amount'      => $this->amount ,
             'description' => $this->description ,
             'type'        => $this->type ,
