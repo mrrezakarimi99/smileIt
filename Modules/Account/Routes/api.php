@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Account\Http\Controllers\AccountController;
+use Modules\Account\Http\Controllers\PaymentController;
 
 Route::group([
     'prefix'     => 'api/v1' ,
@@ -17,9 +18,12 @@ Route::group([
     });
 
     Route::group([
-        'prefix' => 'Account'
+        'prefix' => 'account',
+        'middleware' => ['auth:api'] ,
     ] , function () {
-        // Public routes
+        Route::post('charge' , [PaymentController::class , 'charge']);
+        Route::post('withdraw' , [PaymentController::class , 'withdraw']);
+        Route::post('transfer' , [PaymentController::class , 'transfer']);
     });
 
 });

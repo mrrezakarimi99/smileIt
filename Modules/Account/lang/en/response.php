@@ -21,4 +21,18 @@ return [
         'success' => ':module successfully deleted.' ,
         'fail'    => ':module failed to delete.' ,
     ] ,
+    'payment' => [
+        'charge'  => [
+            'success' => 'Payment successfully charged.' ,
+            'fail'    => 'Payment failed to charge.' ,
+        ] ,
+        'withdraw'  => [
+            'success' => 'Payment successfully withdrawn.' ,
+            'fail'    => 'Payment failed to withdraw.' ,
+        ] ,
+        'transfer'  => [
+            'success' => 'Payment successfully transferred.' ,
+            'fail'    => 'Payment failed to transfer.' ,
+        ] ,
+    ]
 ];
