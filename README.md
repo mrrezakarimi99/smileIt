@@ -5,14 +5,24 @@
 - composer
 - mysql 8.0
 - laravel 8.0
-- docker (optional)
+- docker (optional) 
+  - for use docker just checkout to dockerize branch
 
 # usage
+
+#### clone and install
 ```bash
 git clone https://github.com/mrrezakarimi99/smileIt
 cd smileIt
+```
+#### config .env files
+```bash
 cp .env.example .env # and edit it for your database
+```
+#### install and run
+```bash
 composer install
+php artisan key:generat
 php artisan migrate
 php artisan db:seed
 php artisan serve
