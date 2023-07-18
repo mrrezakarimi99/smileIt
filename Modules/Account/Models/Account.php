@@ -3,6 +3,7 @@
 namespace Modules\Account\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Account\Database\factories\AccountFactory;
 use Modules\Account\Http\Resources\AccountCollection;
 use Modules\Account\Http\Resources\AccountResource;
@@ -13,7 +14,7 @@ use Modules\User\Models\User;
 
 class Account extends CoreModel
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
 
     const RESOURCE = AccountResource::class;
     const RESOURCE_COLLECTION = AccountCollection::class;
