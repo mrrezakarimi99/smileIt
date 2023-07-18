@@ -44,4 +44,21 @@ return [
             'User' ,
         ] ,
     ] ,
+    'Transaction' => [
+        'name'        => 'Transaction' ,
+        'description' => 'Transaction Module' ,
+        'status'      => true ,
+        'services'    => [
+            'provider' => 'Modules\\Transaction\\TransactionServiceProvider' ,
+            'lang' => [
+                'path' => 'Modules/Transaction/lang' ,
+                'name' => 'transaction' ,
+            ] ,
+        ] ,
+        'dependencies' => [
+            'Account' ,
+            'User' ,
+            'Bank' ,
+        ] ,
+    ] ,
 ];
