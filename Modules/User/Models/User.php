@@ -3,8 +3,10 @@
 namespace Modules\User\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Modules\Account\Models\Account;
 use Modules\Core\Models\CoreAuthenticatable;
 use Modules\User\Database\factories\UserFactory;
 use Modules\User\Http\Resources\User\UserCollection;
@@ -37,13 +39,25 @@ class User extends CoreAuthenticatable implements JWTSubject
         'remember_token' ,
     ];
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relationships
+    |--------------------------------------------------------------------------
+    |
+    */
+    public function accounts(): HasMany
+    {
+        return $this->hasMany(Account::class);
+    }
+
+
     /*
     |--------------------------------------------------------------------------
     | Accessors
     |--------------------------------------------------------------------------
     |
     */
-
     /**
      * @return UserFactory
      */
